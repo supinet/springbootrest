@@ -6,7 +6,9 @@ import med.supi.api.domain.doctor.Specialty;
 
 import java.time.LocalDateTime;
 
-public record AppointmentScheduleDetailDto(
+public record AppointmentScheduleDetailDto (
+    Long id,
+
     Long doctorId,
 
     @NotNull
@@ -14,7 +16,9 @@ public record AppointmentScheduleDetailDto(
 
     @NotNull
     @Future
-    LocalDateTime dateTime,
-
-    Specialty specialty
-) { }
+    LocalDateTime dateTime
+) {
+    public AppointmentScheduleDetailDto(Appointment appointment) {
+        this(appointment.getId(), appointment.getDoctor().getId(), appointment.getPatient().getId(), appointment.getDateTime());
+    }
+}

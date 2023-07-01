@@ -1,4 +1,4 @@
-package med.supi.api.domain.appointment.validations;
+package med.supi.api.domain.appointment.validations.scheduling;
 
 import med.supi.api.domain.appointment.AppointmentScheduleDto;
 

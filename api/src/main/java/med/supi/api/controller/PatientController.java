@@ -1,5 +1,6 @@
 package med.supi.api.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +28,7 @@ import org.springframework.data.web.PageableDefault;
 
 @RestController
 @RequestMapping("patients")
+@SecurityRequirement(name = "bearer-key")
 public class PatientController {
 
     @Autowired

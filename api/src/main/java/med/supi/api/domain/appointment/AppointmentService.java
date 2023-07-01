@@ -1,7 +1,8 @@
 package med.supi.api.domain.appointment;
 
 import med.supi.api.domain.ExceptionValidation;
-import med.supi.api.domain.appointment.validations.AppointmentScheduleValidator;
+import med.supi.api.domain.appointment.validations.cancellation.AppointmentScheduleCancellationValidator;
+import med.supi.api.domain.appointment.validations.scheduling.AppointmentScheduleValidator;
 import med.supi.api.domain.doctor.Doctor;
 import med.supi.api.domain.doctor.DoctorRepository;
 import med.supi.api.domain.patient.PatientRepository;
@@ -24,7 +25,10 @@ public class AppointmentService {
 
     @Autowired
     private List<AppointmentScheduleValidator> validators;
-    public void schedule(AppointmentScheduleDto data) {
+
+    @Autowired
+    private List<AppointmentScheduleCancellationValidator> cancellationValidators;
+    public AppointmentScheduleDetailDto schedule(AppointmentScheduleDto data) {
 
         if (!patientRepository.existsById(data.patientId()))
             throw new ExceptionValidation("Patient id not found");
@@ -36,9 +40,12 @@ public class AppointmentService {
         validators.forEach(v -> v.validate(data));
 
         var doctor = chooseDoctor(data);
+        if (doctor == null)
+            throw new ExceptionValidation("There is no doctor available on this date");
         var patient = patientRepository.getReferenceById(data.patientId());
-        var appointment = new Appointment(null, doctor, patient, data.dateTime());
+        var appointment = new Appointment(null, doctor, patient, data.dateTime(), null);
         appointmentRepository.save(appointment);
+        return new AppointmentScheduleDetailDto(appointment);
     }
 
     private Doctor chooseDoctor(AppointmentScheduleDto data) {
@@ -51,4 +58,13 @@ public class AppointmentService {
         return doctorRepository.chooseRandomDoctorOnDate(data.specialty(), data.dateTime());
     }
 
+    public void cancel(AppointmentScheduleCancelDto data) {
+        if (!appointmentRepository.existsById(data.appointmentId()))
+            throw new ExceptionValidation("There is no appointment with this id");
+
+        cancellationValidators.forEach(v -> v.validate(data));
+
+        var appointment = appointmentRepository.getReferenceById(data.appointmentId());
+        appointment.cancel(data.cancellationReason());
+    }
 }

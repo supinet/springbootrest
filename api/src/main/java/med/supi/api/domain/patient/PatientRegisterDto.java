@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import med.supi.api.domain.address.AddressRecord;
+import med.supi.api.domain.address.AddressDto;
 
 public record PatientRegisterDto(
     @NotBlank
@@ -22,6 +22,6 @@ public record PatientRegisterDto(
 
     @NotNull
     @Valid
-    AddressRecord address
+    AddressDto address
 
 ) { }

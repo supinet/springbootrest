@@ -1,5 +1,6 @@
 package med.supi.api.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,6 +28,7 @@ import org.springframework.http.ResponseEntity;
 
 @RestController
 @RequestMapping("doctors")
+@SecurityRequirement(name = "bearer-key")
 public class DoctorController {
 
     @Autowired

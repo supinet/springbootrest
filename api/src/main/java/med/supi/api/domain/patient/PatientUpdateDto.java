@@ -1,7 +1,7 @@
 package med.supi.api.domain.patient;
 
 import jakarta.validation.constraints.NotNull;
-import med.supi.api.domain.address.AddressRecord;
+import med.supi.api.domain.address.AddressDto;
 
 public record PatientUpdateDto (
 
@@ -9,7 +9,7 @@ public record PatientUpdateDto (
     Long id,
     String name,
     String telephone,
-    AddressRecord address
+    AddressDto address
     
 ) {
     

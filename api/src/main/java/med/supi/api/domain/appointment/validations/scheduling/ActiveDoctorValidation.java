@@ -1,13 +1,15 @@
-package med.supi.api.domain.appointment.validations;
+package med.supi.api.domain.appointment.validations.scheduling;
 
 import jakarta.validation.ValidationException;
 import med.supi.api.domain.appointment.AppointmentScheduleDto;
 import med.supi.api.domain.doctor.DoctorRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ActiveDoctorValidation implements AppointmentScheduleValidator {
 
+    @Autowired
     private DoctorRepository doctorRepository;
     public void validate(AppointmentScheduleDto data) {
         if (data.doctorId() == null)

@@ -19,7 +19,7 @@ public class Address {
     private String number;
     private String uf;
 
-    public Address(AddressRecord address) {
+    public Address(AddressDto address) {
         this.street = address.street();
         this.neighborhood = address.neighborhood();
         this.zipcode = address.zipcode();
@@ -29,7 +29,7 @@ public class Address {
         this.complement = address.complement();
     }
 
-    public void updateAddress(AddressRecord address) {
+    public void updateAddress(AddressDto address) {
         if (address.street() != null)
             this.street = address.street();
         
